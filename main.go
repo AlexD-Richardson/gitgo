@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	flag "github.com/ogier/pflag"
+)
+
+// flags
+var (
+	user string
+)
 
 func main() {
-	fmt.Println("This is going to be the start of something beautiful ladies and gentlmen.")
+	flag.Parse()
+}
+
+func init() {
+	flag.StringVarP(&user, "user", "u", "", "Search Users")
 }
