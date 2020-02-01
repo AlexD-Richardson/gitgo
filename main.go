@@ -18,18 +18,26 @@ func main() {
 	flag.Parse()
 
 	//if the user does not supply the necessary flags, just print usage
-	// TODO put this into its own func
 	if flag.NFlag() == 0 {
-		fmt.Printf("Usage: %s [options]\n", os.Args[0])
-		fmt.Println("Options:")
-		flag.PrintDefaults()
-		os.Exit(1)
+		printUsage()
 	}
 
+	// Separating the users out via a split on the comma
 	users := strings.Split(user, ",")
 	fmt.Printf("Searching user(s): %s\n", users)
+	fmt.Println("")
+	for _, u := range users {
+		result := getUsers(u)
+	}
 }
 
 func init() {
 	flag.StringVarP(&user, "user", "u", "", "Search Users")
+}
+
+func printUsage() {
+	fmt.Printf("Usage: %s [options]\n", os.Args[0])
+	fmt.Println("Options:")
+	flag.PrintDefaults()
+	os.Exit(1)
 }
