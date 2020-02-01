@@ -1,6 +1,12 @@
 package main
 
-import "time"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"time"
+)
 
 const (
 	apiURL       = "https://api.github.com"
@@ -37,4 +43,21 @@ type User struct {
 	Following         int         `json:"following"`
 	CreatedAt         time.Time   `json:"created_at"`
 	UpdatedAt         time.Time   `json:"updated_at"`
+}
+
+func getUsers(name string) User {
+	resp, err := http.Get(apiURL + userEndpoint + name)
+	if err != nil {
+		log.Fatalf("Slowly back away from the computer... Jk GET request messed up: %s\n", err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("MALFUNCTION!... jk there was an error reading your data: %s\n", err)
+	}
+
+	var user User
+	json.Unmarshal(body, &user)
 }
