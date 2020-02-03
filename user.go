@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -46,11 +48,16 @@ type User struct {
 }
 
 func getUsers(name string) User {
+	// Making GET request to GitHub API for the user(s)
 	resp, err := http.Get(apiURL + userEndpoint + name)
+
+	// if an err was passed back from GET request then log the err and exit with Fatalf
 	if err != nil {
+
 		log.Fatalf("Slowly back away from the computer... Jk GET request messed up: %s\n", err)
 	}
 
+	// Deferring the closing of the resp body till the top-level func returns
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -60,4 +67,12 @@ func getUsers(name string) User {
 
 	var user User
 	json.Unmarshal(body, &user)
+
+	if (User{}) == user {
+		fmt.Println("I don't know who you are looking for but they don't exist")
+		os.Exit(1)
+		return user
+	}
+
+	return user
 }

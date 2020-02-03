@@ -28,6 +28,11 @@ func main() {
 	fmt.Println("")
 	for _, u := range users {
 		result := getUsers(u)
+		fmt.Printf("Username: %s ", result.Login)
+		fmt.Printf("Name: %s ", result.Name)
+		fmt.Printf("Email: %s ", result.Email)
+		fmt.Printf("Bio: %s ", result.Bio)
+		fmt.Println("")
 	}
 }
 
