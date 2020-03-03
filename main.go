@@ -32,6 +32,7 @@ func main() {
 		fmt.Printf("Name: %s ", result.Name)
 		fmt.Printf("Email: %s ", result.Email)
 		fmt.Printf("Bio: %s ", result.Bio)
+		fmt.Printf("Public Repo: %i ", result.PublicRepos)
 		fmt.Println("")
 	}
 }
